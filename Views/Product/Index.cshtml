@@ -1,0 +1,48 @@
+﻿@model CT_App.Models.ProductModel
+
+@{
+    ViewBag.Title = "Sales";
+    List<SelectListItem> states = new List<SelectListItem>();
+    foreach(var state in Model.ArrayOfStates)
+    {
+        SelectListItem i = new SelectListItem();
+        i.Text = state;
+        i.Value = state;
+        i.Selected = state == Model.SelectedState;
+        states.Add(i);
+    }
+}
+
+@using (@Html.BeginForm())
+{
+
+    @Html.DropDownListFor(m => m.SelectedState, states)
+
+
+    <input type="submit" value="update" class="btn btn-primary" />
+
+    <h4>Top Sales for @Model.SelectedState</h4>
+        <table class="table table-responsive">
+            @foreach (var product in @Model.state)
+            {
+                <tr>
+                    <td>@product.ProductName</td>
+                    <td></td>
+                    <td>@product.LineTotal</td>
+                </tr>
+            }
+         </table>
+
+        <h4>Top Products for @Model.SelectedState</h4>
+            <table class="table table-responsive">
+                @foreach (var product in @Model.sales)
+                {
+                    <tr>
+                        <td>@product.ProductName</td>
+                        <td></td>
+                        <td>@product.OrderQty</td>
+                    </tr>
+                }
+         </table>
+}
+
